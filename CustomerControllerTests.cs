@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using WebAPIExercise.Controllers;
 using WebAPIExercise.Models;
 using FluentAssertions;
+using Moq;
+using WebAPIExercise.Services.CustomerService;
 
 
 namespace WebAPIExercise.Tests
@@ -42,20 +44,21 @@ namespace WebAPIExercise.Tests
             Assert.IsType<CreatedAtActionResult>(getResult);
 
         }
-        
+        */
 
         [Fact]
         public void GetOne_WhenCalled_ReturnsCustomer()
         {
 
-            var customers = new List<Customer> {
-                new Customer { Id = 1, FirstName = "steve", Lastname = "Balh", Email = "correo@bla.com"  },
-                new Customer { Id = 2, FirstName = "luis", Lastname = "Balh", Email = "luis@bla.com"  }
-            };
+            //var customers = new List<Customer> {
+            //   new Customer { Id = 1, FirstName = "steve", Lastname = "Balh", Email = "correo@bla.com"  },
+            //   new Customer { Id = 2, FirstName = "luis", Lastname = "Balh", Email = "luis@bla.com"  }
+            //};
 
-            TestController SUT = new TestController(customers);
-
-
+            var mockService = new Mock<ICustomerService>();
+            var fakeCustomer = new Customer { Id = 1, FirstName = "steve", Lastname = "Balh", Email = "correo@bla.com"  };
+            mockService.Setup (servDeDondeSalioEsteNombre => servDeDondeSalioEsteNombre.GetOne(1)).Returns(fakeCustomer);  
+            TestController SUT = new TestController(mockService.Object);
             //act 
             var getResult = (OkObjectResult)SUT.Get(1);
 
@@ -66,7 +69,7 @@ namespace WebAPIExercise.Tests
             getResult.Value.Should().BeEquivalentTo(expected);
 
         }
-        */
+        
 
     }
 }
