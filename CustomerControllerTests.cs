@@ -2,11 +2,10 @@ using System;
 using Xunit;
 using Microsoft.AspNetCore.Mvc;
 using WebAPIExercise.Controllers;
-using WebAPIExercise.Models;
 using FluentAssertions;
 using Moq;
 using WebAPIExercise.Services.CustomerService;
-
+using WebAPIExercise.Data.Models;
 
 namespace WebAPIExercise.Tests
 {
