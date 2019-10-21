@@ -83,18 +83,30 @@ namespace WebAPIExercise.Tests
             result.Value.Should().BeEquivalentTo(fakePost);
         }
 
-        /* 
+        
         [Fact]
         public void Add_WhenCalled_ReturnsOKResult()
         {
             //Given //Arrange
-            BlogPosts post = new BlogPosts();
+
+            var mockService = new Mock<IPostService>();
+
             Post data = new Post{
+                Title = "Titulo",
+                Body = "contenido del post",
+                Autor = "el equipo"
+            };
+
+            Post expected = new Post{
+                Id = 1,
                 Title = "Titulo",
                 Body = "contenido del post",
                 Autor = "el equipo"
             }; 
 
+            mockService.Setup( serv => serv.Add(data)).Returns(expected);
+            BlogPosts post = new BlogPosts(mockService.Object); 
+            
             // When  // Act
             var result = post.Add(data);
 
@@ -103,7 +115,7 @@ namespace WebAPIExercise.Tests
         
         }
 
-
+        /* 
         [Fact]
         public void Delete_WhenCalledWhitoutID_ReturnsBadRequest()
         {
